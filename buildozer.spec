@@ -10,6 +10,7 @@ title = Credit Book App
 package.name = creditbookapp
 
 # (str) Package domain (needed for android/ios packaging)
+# Sulaiman Shah ka custom domain setup
 package.domain = org.salman
 
 # (str) Source code where the main.py live
@@ -43,11 +44,15 @@ android.api = 33
 # (int) Minimum API your APK / AAB will support.
 android.minapi = 24
 
+# (str) Android NDK version to use (Sahi jagah par set kar diya hai)
+android.ndk = 25b
+
 # (list) The Android archs to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
 android.archs = arm64-v8a, armeabi-v7a
 
 # (bool) enables Android auto backup feature (Android API >=23)
 android.allow_backup = True
+
 
 [buildozer]
 
@@ -56,4 +61,3 @@ log_level = 2
 
 # (int) Display warning if buildozer is run as root (0 = False, 1 = True)
 warn_on_root = 1
-android.ndk = 25b
