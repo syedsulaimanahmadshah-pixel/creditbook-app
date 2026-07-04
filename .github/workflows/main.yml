@@ -8,28 +8,38 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
 
-    - name: Install Buildozer and Dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev bzip2 dirmngr
-        pip install --user --upgrade pip
-        pip install --user cython==0.29.33 virtualenv buildozer
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
 
-    - name: Build with Buildozer Strictly Fresh
-      run: |
-        export PATH=$PATH:~/.local/bin
-        yes | buildozer android debug
-        
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: creditbook-apk
-        path: bin/*.apk
+      - name: Install Dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+          git zip unzip autoconf libtool pkg-config \
+          zlib1g-dev libncurses5-dev libncursesw5-dev \
+          cmake libffi-dev libssl-dev bzip2
+
+          python -m pip install --upgrade pip
+          pip install cython==0.29.33
+          pip install buildozer
+
+      - name: Build APK
+        run: |
+          export PATH=$HOME/.local/bin:$PATH
+          buildozer android debug
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: CreditBookAPK
+          path: bin/*.apk
