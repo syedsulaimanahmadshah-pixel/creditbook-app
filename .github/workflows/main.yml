@@ -20,15 +20,13 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev bzip2 dirmngr
-        # Global environment conflicts se bachne ke liye --user flag lazmi hai
         pip install --user --upgrade pip
         pip install --user cython==0.29.33 virtualenv buildozer
 
-    - name: Build with Buildozer
+    - name: Build with Buildozer Fresh
       run: |
-        # User binaries ka path explicitly set karein taake buildozer executable mil sake
         export PATH=$PATH:~/.local/bin
-        buildozer android clean
+        # Kisi kism ki clean command nahi chalani taake FileNotFoundError na aaye
         yes | buildozer android debug
         
     - name: Upload APK Artifact
