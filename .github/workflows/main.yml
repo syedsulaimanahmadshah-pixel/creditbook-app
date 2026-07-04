@@ -23,10 +23,9 @@ jobs:
         pip install --user --upgrade pip
         pip install --user cython==0.29.33 virtualenv buildozer
 
-    - name: Build with Buildozer Fresh
+    - name: Build with Buildozer Strictly Fresh
       run: |
         export PATH=$PATH:~/.local/bin
-        # Kisi kism ki clean command nahi chalani taake FileNotFoundError na aaye
         yes | buildozer android debug
         
     - name: Upload APK Artifact
